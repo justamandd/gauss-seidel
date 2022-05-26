@@ -19,21 +19,55 @@ def read_matriz_txt(file_name):
                 gross_matrix.append([line])
             else:
                 gross_matrix.append([line])
-    
-    final_matrix = []
-    line = []
-    elem = []
+    return gross_matrix
 
+def treat_matrix(gross_matrix):
+    elements = []
+    lin = []
     for line in gross_matrix:
-        for index in range(len(line)):
-            if index == 0 and line[index] == '-':
-                for sub_index in range(index,len(line)):
-                    if sub_index != index and 
+        for text in line:
+            for elem in text:
+                lin.append(elem)
+        elements.append(lin)
+        lin = []
 
+    var = []
 
-            if line[index] == '-':
-                for sub_index in range(index,len(line)):
-                    
+    lines = []
 
+    for line in elements:
+        for elem in range(len(line)):
+            if line[elem].isalpha():
+                var.append(line[elem])
+                lin.append(var)
+                var = []
+            elif line[elem] == '=':
+                for sub_elem in range(elem+1, len(line)):
+                    var.append(line[sub_elem])
+                lin.append(var)
+                var = []
+            else:
+                var.append(line[elem])
+                if elem == len(line)-1:
+                    var = []
+        lines.append(lin)
+        lin = []
 
-    # return gross_matrix
+    for line in lines:
+        for coeff in line:
+            for elem in coeff:
+                if elem.isalpha():
+                    coeff.remove(elem)
+                    if len(coeff) == 0:
+                        coeff.append('1')
+                    elif len(coeff) == 1:
+                        if coeff[0] == '-':
+                            coeff.append('1')
+    for line in lines:
+        for coeff in line:
+            final_coeff = ''
+            for elem in coeff:
+                final_coeff += elem
+            line[line.index(coeff)] = int(final_coeff)
+    
+    return lines

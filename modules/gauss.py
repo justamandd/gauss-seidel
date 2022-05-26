@@ -89,8 +89,7 @@ def gauss_elimination(matriz):
     for index_line in range(len(matriz)):
         matriz = seleciona_matriz_sem_zero(matriz)
         if index_line == 0:
-            matriz[0] = divide(matriz[index_line],
-                               matriz[index_line][index_column])
+            matriz[0] = divide(matriz[index_line],matriz[index_line][index_column])
         for sub_line in range(len(matriz)):
             if sub_line > index_line:
                 if matriz[sub_line][index_column] != 0:
@@ -121,18 +120,3 @@ def gauss_elimination(matriz):
                             matriz[index_line], matriz[sub_line], -matriz[sub_line][index_column])
         index_column -= 1
     return matriz
-
-matriz_sistema = [[0.0,3.0,2.0,28.0],
-                  [4.0,0.0,2.0,24.0],
-                  [2.0,3.0,0.0,16.0]]
-
-# matriz_sistema = [[2,3,4],
-#                   [1,-5,2]]
-
-# matriz_sistema = [[1, 1, 7],
-#                   [1, 2, 9]]
-
-matriz_sistema = gauss_elimination(matriz_sistema)
-
-for line in matriz_sistema:
-    print(line)
