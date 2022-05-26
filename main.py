@@ -28,6 +28,7 @@ from modules.read_matrix import read_matriz_txt, treat_matrix
 #           [4,2,7,1,28],
 #           [5,3,2,2,33]]
 
+# dá erro por algm motivo
 # matriz_sistema = [[1,1,1,-1,6],
 #           [2,1,-2,1,-1],
 #           [1,-2,1,2,-3],
@@ -35,7 +36,13 @@ from modules.read_matrix import read_matriz_txt, treat_matrix
 
 matriz = read_matriz_txt('teste.txt')
 
+for line in matriz:
+    print(line)
+
 matriz = treat_matrix(matriz)
+
+for line in matriz:
+    print(line)
 
 matriz = gauss_elimination(matriz)
 
