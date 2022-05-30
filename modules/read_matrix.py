@@ -53,6 +53,8 @@ def treat_matrix(gross_matrix):
         lines.append(lin)
         lin = []
 
+    # para tratar divergências de qtd de incognitas e ondem tem que ser aq (lines)
+
     for line in lines:
         for coeff in line:
             for elem in coeff:
