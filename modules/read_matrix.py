@@ -55,6 +55,10 @@ def treat_matrix(gross_matrix):
 
     # para tratar divergências de qtd de incognitas e ondem tem que ser aq (lines)
 
+    normalizar_matriz(lines)
+    print(lines)
+
+
     for line in lines:
         for coeff in line:
             for elem in coeff:
@@ -73,3 +77,43 @@ def treat_matrix(gross_matrix):
             line[line.index(coeff)] = int(final_coeff)
     
     return lines
+
+def normalizar_matriz(matriz):
+    letters = obter_letras_matriz(matriz)
+    
+    for line in matriz:
+        possui_coeff = []
+        for coeff in line:
+            for elem in coeff:
+                if elem.isalpha():
+                    for letter in letters:
+                        if elem == letter:
+                            possui_coeff.append(letter)
+        if possui_coeff == letters:
+            continue
+        else:
+            diff = set(letters).difference(set(possui_coeff))
+            for coeff in diff:
+                line.insert(len(line)-1,['0',coeff])
+
+    # print(letters)
+
+def obter_letras_matriz(matriz):
+    letters = []
+
+    for line in matriz:
+        for coeff in line:
+            for elem in coeff:
+                if elem.isalpha():
+                    letters.append(elem)
+
+    return sorted(list(set(letters)))
+
+
+def ordenar_por_coeff(matriz):
+    matriz_ordenada = []
+    
+    letters = obter_letras_matriz(matriz)
+
+    for line in matriz:
+        
