@@ -1,53 +1,45 @@
-from modules.gauss import gauss_elimination, permutacao, verifica_se_possivel
+from modules.gauss import gauss_elimination, verifica_se_possivel
 from modules.read_matrix import read_matriz_txt, treat_matrix
+from os import system
 
-# matriz = [[0.0,3.0,2.0,28.0],
-        #   [4.0,0.0,2.0,24.0],
-        #   [2.0,3.0,0.0,16.0]]
+def clear_console():
+    system('cls')
 
-# matriz = [[2,3,4],
-#                   [1,-5,2]]
+if __name__ == '__main__':
+    matriz = []
+    clear_console()
+    tipo_leitura = input('Você deseja digitar a matriz ou inserir um arquivo? (D=Digitar/I=Inserir): ')
+    if tipo_leitura.lower() == 'i':
+        clear_console()
+        nome_arquivo = input('Digite o nome do arquivo com a extensão: ')
+        matriz = read_matriz_txt(nome_arquivo)
+    elif tipo_leitura.lower() == 'd':
+        digitar = 1
+        clear_console()
+        print('Digite 0 para sair do looping!')
+        while digitar != '0':
+            linha = input(f'Digite a {digitar} linha do sistema: ')
+            if linha == '0':
+                break
+            else:
+                matriz.append([linha.strip().lower()])
+            digitar += 1
+    else:
+        print('Opção inválida!')
 
-# matriz = [[1, 1, 7],
-#                   [1, 2, 9]]
-
-# matriz = [[4,0,2,24],
-#           [2,3,0,16],
-#           [0,3,2,28]]
-
-# matriz = [[0,3,2,9],
-#           [1,0,4,14],
-#           [0,1,1,4]]
-
-# matriz = [[1,2,1,12],
-#           [1,-3,5,1],
-#           [2,-1,3,10]]
-
-# matriz = [[2,0,0,5,19],
-#           [3,1,0,2,17],
-#           [4,2,7,1,28],
-#           [5,3,2,2,33]]
-
-# dá erro por algm motivo
-# matriz = [[1,1,1,-1,6],
-#           [2,1,-2,1,-1],
-#           [1,-2,1,2,-3],
-#           [1,1,1,1,2]]
-
-matriz = read_matriz_txt('teste.txt')
-
-# for line in matriz:
-#     print(line)
-
-matriz = treat_matrix(matriz)
-
-# for line in matriz:
-#     print(line)
-
-# matriz = gauss_elimination(matriz)
-
-# print(verifica_se_possivel(matriz))
-
-
-for line in matriz:
-    print(line)
+    clear_console()
+    if len(matriz) != 0:
+        print('Matriz base:')
+        for line in matriz:
+            print(line)
+        matriz = treat_matrix(matriz)
+        print('Matriz ampliada tratada:')
+        for line in matriz:
+            print(line)
+        if verifica_se_possivel(matriz):
+            matriz = gauss_elimination(matriz)
+            print('Gauss-Seidel aplicado gerando:')
+            for line in matriz:
+                print(line)
+        else:
+            print('Matriz não é possivel de ser calculada')

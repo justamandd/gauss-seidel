@@ -52,12 +52,8 @@ def treat_matrix(gross_matrix):
                     var = []
         lines.append(lin)
         lin = []
-
-    # para tratar divergências de qtd de incognitas e ondem tem que ser aq (lines)
-
-    normalizar_matriz(lines)
-    print(lines)
-
+        
+    lines = ordenar_por_coeff(normalizar_matriz(lines))
 
     for line in lines:
         for coeff in line:
@@ -79,9 +75,11 @@ def treat_matrix(gross_matrix):
     return lines
 
 def normalizar_matriz(matriz):
+
     letters = obter_letras_matriz(matriz)
-    
-    for line in matriz:
+    matriz_replica = list(matriz)
+
+    for line in matriz_replica:
         possui_coeff = []
         for coeff in line:
             for elem in coeff:
@@ -89,16 +87,14 @@ def normalizar_matriz(matriz):
                     for letter in letters:
                         if elem == letter:
                             possui_coeff.append(letter)
-        if possui_coeff == letters:
-            continue
-        else:
+        if possui_coeff != letters:
             diff = set(letters).difference(set(possui_coeff))
             for coeff in diff:
                 line.insert(len(line)-1,['0',coeff])
+        
+    return matriz_replica
 
-    # print(letters)
-
-def obter_letras_matriz(matriz):
+def obter_letras_matriz(matriz):   
     letters = []
 
     for line in matriz:
@@ -107,8 +103,8 @@ def obter_letras_matriz(matriz):
                 if elem.isalpha():
                     letters.append(elem)
 
-    return sorted(list(set(letters)))
-
+    lines = sorted(list(set(letters)))
+    return lines
 
 def ordenar_por_coeff(matriz):
     matriz_ordenada = []
@@ -116,4 +112,12 @@ def ordenar_por_coeff(matriz):
     letters = obter_letras_matriz(matriz)
 
     for line in matriz:
+        linha = []
+        for letter in letters:
+            for coeff in range(len(line)):
+                if line[coeff][len(line[coeff])-1] == letter:
+                    linha.append(line[coeff])
+        linha.append(line[len(line)-1])
         
+        matriz_ordenada.append(linha)
+    return matriz_ordenada

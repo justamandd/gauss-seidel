@@ -160,12 +160,13 @@ def gauss_elimination(matriz):
 
 def verifica_se_possivel(matriz):
     possivel = False
+    
     for line in matriz:
         for other_line in matriz:
             if other_line == line:
                 continue
             else:
-                coeff = divide_lines(line[:len(line)-2],other_line[:len(line)-2])
+                coeff = divide_lines(line[:len(line)-1],other_line[:len(line)-1])
                 isequal = []
                 for index in range(len(coeff)):
                     if index == len(coeff)-1:
